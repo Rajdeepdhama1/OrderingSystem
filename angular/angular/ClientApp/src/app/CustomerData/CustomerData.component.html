@@ -1,0 +1,16 @@
+<h2>Customer Data</h2>
+
+<form style="margin-top:40px;" id="ItemInventoryForm">
+  <label>Customer Name:</label>
+  <input [(ngModel)]="CustomerDataModel.CustomerName" name="CustomerName" type="text" style="width:100px;margin-left:10px;" />
+  <br /><br />
+
+  <label>Customer Email:</label>
+  <input [(ngModel)]="CustomerDataModel.CustomerEmail" name="CustomerEmail" type="text" style="width:100px;margin-left:10px;" />
+  <br /><br />
+
+  <input (click)="Save()" type="button" style="margin-left:110px;width:60px;" value="Save" />
+
+</form>
+
+

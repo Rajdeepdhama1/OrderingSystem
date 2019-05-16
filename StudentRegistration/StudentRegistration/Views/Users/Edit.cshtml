@@ -1,0 +1,67 @@
+﻿@model StudentRegistration.Models.Data
+
+<form id="UpdateForm">
+
+    <div class="form-group" style="width:350px;">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group" style="width:400px;">
+        @Html.LabelFor(model => model.Approved, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Approved, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Update" class="btn btn-default" data-toggle="modal" data-target="#MyModal" />
+        </div>
+        <div class="modal" id="MyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h3>Confirmation</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Do you want to Edit?
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" id="Update"data-dismiss="modal">Ok</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div style="margin-left:900px;">
+    @Html.ActionLink("Back to List", "GetUsers")
+</div>
+<script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+<script>
+    $('#Update').on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/Users/Update',
+            type: 'POST',
+            data: $('#UpdateForm').serialize(),
+            success: function (data) {
+                alert("Updated Successfully");
+                window.location.reload;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+
+        });
+    });
+
+</script>

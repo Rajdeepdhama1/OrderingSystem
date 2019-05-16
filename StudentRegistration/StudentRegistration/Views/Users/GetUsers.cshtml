@@ -1,0 +1,47 @@
+﻿@model StudentRegistration.Models.PagingViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div id="list">
+    @{await Html.RenderPartialAsync("_GetUsersPartial",@Model.users);}
+</div>
+
+
+<a class="Paging" id="prev">prev</a>
+
+<a style="margin-left:60px;" class="Paging" id="next">next</a><br /><br />
+<div id="Data">
+</div>
+@{await Html.RenderPartialAsync("_SearchedUsersPartial", new Data());}
+
+
+<script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    var currentPage = 1;
+    $(".Paging").on('click', function () {
+        var id = $(this).attr('id');
+        var a=@Model.TotalPages;
+        if (id == 'next') {
+            if (currentPage == a) {
+                return false;
+            }
+            currentPage = currentPage + 1;
+        }
+        else if (id == 'prev') {
+            if (currentPage == 1) {
+                return false;
+            }
+            currentPage = currentPage - 1;
+        }
+        $.ajax({
+            url: '/Users/Paging',
+            type: 'POST',
+            data: { page: currentPage },
+            success: function (data) {
+                $('#list').html(data);
+            },
+            error: function (error) {
+                $('#list').hide();
+            }
+        });
+    })
+</script>

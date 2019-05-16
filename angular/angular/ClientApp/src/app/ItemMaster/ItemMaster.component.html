@@ -1,0 +1,20 @@
+<h2>Item Master</h2> 
+<p *ngIf="!categories"><em>Loading...</em></p>
+<form style="margin-top:40px;" id="ItemForm">
+  <label>Category:</label>
+  <select   style="margin-left:40px;" [(ngModel)]="ItemMasterModel.CategoryID"  name="categoryID" >
+    <option *ngFor="let category of categories" value="{{category.categoryID}}">{{category.categoryName}}</option>
+  </select>
+  <br /><br />
+
+  <label>Item Name:</label>
+  <input [(ngModel)]="ItemMasterModel.ItemName" name="itemName" type="text" style="width:90px;margin-left:30px;"/>
+  <br /><br />
+
+  <input (click)="Save()"type="button" style="margin-left:110px;width:55px;"value="Save"/>
+ 
+</form>
+
+
+
+

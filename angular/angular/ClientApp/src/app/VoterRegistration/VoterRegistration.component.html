@@ -1,0 +1,43 @@
+<h2>Order Item</h2>
+<form id="OrderItemForm" (ngSubmit)="Save()">
+
+  <label>Country:</label>
+  <select [(ngModel)]="RegistrationModel.countryID" name="countryID"(ngModelChange)="getStates(RegistrationModel.countryID)" >
+    <option *ngFor="let country of countries" value="{{country.countryID}}">{{country.countryName}}</option>
+  </select>
+  <br /><br />
+
+
+  <label>State:</label>
+  <select [(ngModel)]="RegistrationModel.stateID" name="stateID"(ngModelChange)="getCities(RegistrationModel.stateID)">
+    <option *ngFor="let state of states" value="{{state.stateID}}">{{state.stateName}}</option>
+  </select>
+  <br /><br />
+
+
+  <label>City:</label>
+  <select [(ngModel)]="RegistrationModel.cityID" name="cityID">
+    <option *ngFor="let city of cities" value="{{city.cityID}}">{{city.cityName}}</option>
+  </select>
+  <br /><br />
+
+
+  <label> Name:</label>
+  <input [(ngModel)]="RegistrationModel.userName" name="userName" type="text" style="width:50px;margin-left:30px;" />
+  <br /><br />
+
+  <label> Phone:</label>
+  <input [(ngModel)]="RegistrationModel.phone" name="phone" type="number" style="width:50px;margin-left:30px;" />
+  <br /><br />
+
+  <label> Address:</label>
+  <input [(ngModel)]="RegistrationModel.address" name="address" type="text" style="width:50px;margin-left:30px;" />
+  <br /><br />
+
+
+  <input (click)="Save()" type="button" class="btn-primary" value="Save" />
+</form>
+<br /><br />
+
+
+

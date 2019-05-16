@@ -1,0 +1,19 @@
+﻿@model Data
+
+<form method="post" asp-action="SearchUserByDetails">
+    <label>Enter Name:</label>
+    <input type="text" style="width:110px;" asp-for="@Model.Name" />
+    <label>Enter Address:</label>
+    <input type="text" style="width:110px;" asp-for="@Model.Address" />
+    <label>Enter PhoneNo:</label>
+    <input type="number" style="width:110px;" asp-for="@Model.PhoneNo" />
+    <label>Enter Email:</label>
+    <input type="text" style="width:110px;" asp-for="@Model.Email" />
+    <label>Enter State:</label>
+    <input type="text" style="width:110px;" asp-for="@Model.State" />
+    <label>Enter Approved status:</label>
+    <input type="text" asp-for="@Model.Approved" /><br />
+    <input style="margin-left:440px;" type="submit" value="Search">
+</form>
+
+

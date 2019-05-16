@@ -1,0 +1,26 @@
+<h2>Item Inventory</h2>
+<p *ngIf="!Items"><em>Loading...</em></p>
+<form style="margin-top:40px;" id="ItemInventoryForm">
+  <label>Item:</label>
+  <select style="margin-left:40px;" [(ngModel)]="ItemInventoryModel.ItemID" name="itemID">
+    <option *ngFor="let item of Items" value="{{item.itemID}}">{{item.itemName}}</option>
+  </select>
+  <br /><br />
+
+  <label>Quantity:</label>
+  <input [(ngModel)]="ItemInventoryModel.ItemQuantity" name="itemQuantity" type="number" style="width:65px;margin-left:10px;" />
+  <br /><br />
+
+  <label>Rate:</label>
+  <input [(ngModel)]="ItemInventoryModel.ItemRate" name="itemRate" type="number" style="width:65px;margin-left:37px;" />
+  <br /><br />
+
+ 
+
+  <input (click)="Save()" type="button" style="margin-left:110px;width:60px;" value="Save" />
+
+</form>
+
+
+
+

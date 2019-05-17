@@ -13,6 +13,8 @@ import { ItemInventoryComponent } from './ItemInventory/ItemInventory.component'
 import { CustomerDataComponent } from './CustomerData/CustomerData.component';
 import { ItemOrderComponent } from './ItemOrder/ItemOrder.component';
 import { VoterRegistrationComponent } from './VoterRegistration/VoterRegistration.component';
+import { ItemAddressComponent } from './ItemAddress/ItemAddress.component';
+
 
 
 
@@ -28,6 +30,7 @@ import { VoterRegistrationComponent } from './VoterRegistration/VoterRegistratio
     CustomerDataComponent,
     ItemOrderComponent,
     VoterRegistrationComponent,
+    ItemAddressComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,6 +45,7 @@ import { VoterRegistrationComponent } from './VoterRegistration/VoterRegistratio
       { path: 'CustomerData', component: CustomerDataComponent },
       { path: 'ItemOrder', component: ItemOrderComponent },
       { path: 'VoterRegistration', component: VoterRegistrationComponent },
+      { path: 'ItemAddress', component: ItemAddressComponent },
     ])
   ],
   providers: [],

@@ -2,26 +2,26 @@
 <form id="OrderItemForm" (ngSubmit)="Add()">
 
   <label>Customer:</label>
-  <select [(ngModel)]="ItemOrder.customerID" name="customerID">
+  <select [(ngModel)]="ItemOrder.customerID" name="customerID" >
     <option *ngFor="let customer of customers" value="{{customer.customerID}}">{{customer.customerName}}</option>
   </select>
   <br /><br />
 
 
   <label>Item:</label>
-  <select [(ngModel)]="ItemOrder.itemID" name="itemID">
+  <select [(ngModel)]="ItemOrder.itemID" name="itemID"style="margin-left:36px;" (ngModelChange)="getPrice(ItemOrder.itemID)">
     <option *ngFor="let item of items" value="{{item.itemID}}">{{item.itemName}}</option>
   </select>
   <br /><br />
 
 
   <label> Quantity:</label>
-  <input [(ngModel)]="ItemOrder.ItemOrderQuantity" type="number" id="itemQuantity" name="ItemOrderQuantity" style="width:50px;" (ngModelChange)="getPrice(ItemOrder.itemID)" />
+  <input [(ngModel)]="ItemOrder.ItemOrderQuantity" type="number" id="itemQuantity" name="ItemOrderQuantity" style="width:82px;margin-left:10px;" (ngModelChange)="getPrice(ItemOrder.itemID)" />
   <br /><br />
 
 
-  <label> Total Amount:</label>
-  <input disabled [(ngModel)]="ItemOrder.TotalAmount" name="TotalAmount" type="text" style="width:50px;margin-left:30px;" />
+  <label> Amount:</label>
+  <input disabled [(ngModel)]="ItemOrder.TotalAmount" name="TotalAmount" type="text" style="width:82px;margin-left:13px;" />
   <br /><br />
 
   <button  type="submit" class="btn-primary">Add</button>
@@ -40,7 +40,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let Obj of arr;let RowIndex = index">
+    <tr *ngFor="let Obj of arr;let RowIndex = index" (click)="LoadData(Obj)">
       <td>{{ Obj.customerID }}</td>
       <td>{{ Obj.itemID }}</td>
       <td>{{ Obj.ItemOrderQuantity }}</td>

@@ -12,11 +12,11 @@ export class VoterRegistrationComponent implements OnInit {
   states: any;
   cities: any;
   public RegistrationModel = {
-    countryID: 0,
-    stateID: 0,
-    cityID: 0,
+    countryID: null,
+    stateID: null,
+    cityID: null,
     userName: "",
-    phone: 0,
+    phone: null,
     address:"",
   };
    

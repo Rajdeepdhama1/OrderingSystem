@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-ItemOrder',
@@ -8,33 +9,21 @@ import { HttpClient } from '@angular/common/http';
 export class ItemOrderComponent implements OnInit {
  
   public customers: any;
-  public arr: Array<{ customerID: number, itemID: number, ItemOrderQuantity: number, TotalAmount: number }> = [];
+  public arr: Array<{ customerID: number, itemID: number, ItemOrderQuantity: number, TotalAmount: number, id: number }> = [];
   public orderedItems: any;
-  public customerDataModel = {
-    customerID: null,
-    customerName: "",
-    customerEmail: ""
-  };
-  itemObj: any;
-  public itemMasterModel = {
-    itemID: 0,
-    itemName: "",
-  };
+ 
   public ItemOrder = {
     OrderID: 0,
     ItemOrderQuantity: 0,
     TotalAmount: 0,
     customerID: 0,
     itemID: 0,
+    ID: 0,
   };
-  public RateListModel = {
-    itemRate: 0,
-    itemID: 0,
-  };
-
+  
   private _baseUrl: string;
   private _http: HttpClient;
-  items: ItemMasterModel;
+  items: any;
   myPrice: number;
   RateList: any;
   public result: any;
@@ -42,33 +31,23 @@ export class ItemOrderComponent implements OnInit {
   constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
     this._baseUrl = apiUrl;
     this._http = http;
-    this.customerDataModel = {
-      customerID: 0,
-      customerName: "",
-      customerEmail: ""
-    }
-    this.itemMasterModel = {
-      itemID: 0,
-      itemName: "",
-
-    }
+  
     this.ItemOrder = {
       OrderID: 0,
       ItemOrderQuantity: 0,
       TotalAmount: 0,
       customerID: 0,
       itemID: 0,
+      ID: 0,
     };
-    this.RateListModel = {
-    itemRate: 0,
-    itemID: 0,
-  };
+    
 
-    this._http.get<ItemMasterModel>(this._baseUrl + 'Default/GetItems').subscribe(result => {
+    this._http.get(this._baseUrl + 'Default/GetItems').subscribe(result => {
       this.items = result;
+      console.log(this.items)
     }, error => console.error(error));
 
-    this._http.get<CustomerDataModel>(this._baseUrl + 'Default/GetCustomers').subscribe(result => {
+    this._http.get(this._baseUrl + 'Default/GetCustomers').subscribe(result => {
       this.customers = result;
     }, error => console.error(error));
 
@@ -92,41 +71,72 @@ export class ItemOrderComponent implements OnInit {
     }
   }
 
-  Add() {
-    this.arr.push({
-      customerID: this.ItemOrder.customerID,  
-      itemID: this.ItemOrder.itemID,
-      ItemOrderQuantity: this.ItemOrder.ItemOrderQuantity,
-      TotalAmount: this.ItemOrder.TotalAmount,
-    })
-  }
+  Add()
+  {
+    if (this.arr.length == 0 || this.ItemOrder.ID == 0) {
+      this.arr.push({
+        customerID: this.ItemOrder.customerID,
+        itemID: this.ItemOrder.itemID,
+        ItemOrderQuantity: this.ItemOrder.ItemOrderQuantity,
+        TotalAmount: this.ItemOrder.TotalAmount,
+        id: this.arr.length + 1
+      })
+    }
+    else {
+      for (let Array of this.arr) {
+        if (Array.id == this.ItemOrder.ID) {
+          Array.customerID = this.ItemOrder.customerID;
+          Array.itemID = this.ItemOrder.itemID;
+          Array.ItemOrderQuantity = this.ItemOrder.ItemOrderQuantity;
+          Array.TotalAmount = this.ItemOrder.TotalAmount;
+          Array.id = this.ItemOrder.ID;
+        }
+        else {
+          console.log(this.ItemOrder.ID)
+          
+        }
+      }
+    }
+    this.ItemOrder = {
+      OrderID: 0,
+      ItemOrderQuantity: 0,
+      TotalAmount: 0,
+      customerID: 0,
+      itemID: 0,
+      ID: 0,
+    };
+}
 
+
+ 
   getPrice(itemID) {
-
-    var result = this.RateList[itemID]; 
-    this.ItemOrder.TotalAmount = parseFloat((result * this.ItemOrder.ItemOrderQuantity).toFixed(2));
-    console.log(this.ItemOrder.TotalAmount);
-      
+    if (this.ItemOrder.ItemOrderQuantity == 0) {
+      this.ItemOrder.TotalAmount = 0;
+    }
+    else {
+      var result = this.RateList[itemID];
+      this.ItemOrder.TotalAmount = parseFloat((result * this.ItemOrder.ItemOrderQuantity).toFixed(2));
+    }  
     
     //this._http.get<any>(this._baseUrl + 'Default/GetItemRate?id=' + this.ItemOrder.itemID).subscribe(result => {
     //  this.ItemOrder.TotalAmount = parseFloat((result * this.ItemOrder.ItemOrderQuantity).toFixed(2));
     //  console.log(this.ItemOrder.TotalAmount);
     //}, error => console.error(error));
   }
-
+  LoadData(Obj) {
+    console.log(Obj);
+    this.ItemOrder = {
+      OrderID: 0,
+      ItemOrderQuantity: Obj.ItemOrderQuantity,
+      TotalAmount: Obj.TotalAmount,
+      customerID: Obj.customerID,
+      itemID: Obj.itemID,
+      ID: Obj.id,
+    };
+  }
 }
 
-interface CustomerDataModel {
-  customerID: number;
-  customerName: string;
-  customerEmail: string;
-}
 
-interface ItemMasterModel {
-  ItemID: number;
-  ItemName: string;
-
-}
 
 interface ItemOrder {
   OrderID: number;
@@ -134,10 +144,6 @@ interface ItemOrder {
   TotalAmount: number;
   ItemID: number;
   customerID: number;
+  ID: number;
 
-}
-interface RateListModel {
-    length: number;
-  itemRate: number;
-  itemID: number;
 }
